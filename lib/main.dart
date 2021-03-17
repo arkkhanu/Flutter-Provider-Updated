@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlife_and_provider/Screens/SecondScreen.dart';
+import 'package:flutter_sqlife_and_provider/Services/ConnectionCheck.dart';
 import 'package:flutter_sqlife_and_provider/Services/DatabaseHelper.dart';
 import 'package:flutter_sqlife_and_provider/Services/Providers/Cities_Provider.dart';
 import 'package:flutter_sqlife_and_provider/Services/Providers/Connectivity_Provider.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         StreamProvider<NetworkStatusCheck>(
+
           initialData: NetworkStatusCheck.NotConnected,
           create: (context) =>
           Connectivity_Provider().networkStatusController.stream,
@@ -110,6 +112,12 @@ class _MyHomePageState extends State<MyHomePage> {
             TextButton(
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, "/ThirdScreen");
+                },
+                child: Text("Move to Currency Page")),
+            TextButton(
+                onPressed: ()  async {
+                bool result = await ConnectionCheck.isConnectedOrNot();
+                print("result"+result.toString());
                 },
                 child: Text("Move to Currency Page"))
           ],

@@ -14,9 +14,16 @@ class ThirdScreen extends StatelessWidget {
     return Scaffold(
 
       appBar: AppBar(title: Text("Connectivity Check"),),
-      body: Container(child: Consumer<NetworkStatusCheck>(
-        builder: (context, value, child) => Text("Data"+value.toString()),
-      ),),
+      body: Column(
+        children: [
+          Container(child: Consumer<NetworkStatusCheck>(
+            builder: (context, value, child) => Text("Data"+value.toString()),
+          ),),
+          ElevatedButton(onPressed: (){
+            print("Check2:"+prov.toString());
+          }, child: Text("Check Internet"))
+        ],
+      ),
     );
   }
 

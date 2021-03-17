@@ -1,25 +1,20 @@
-
-
-
-
-
-
 import 'dart:async';
 import 'dart:io';
 
 import 'package:connectivity/connectivity.dart';
 
-enum NetworkStatusCheck {
-  Connected,
-  NotConnected
-}
+enum NetworkStatusCheck { Connected, NotConnected }
 
 class Connectivity_Provider {
 
-  StreamController<NetworkStatusCheck> networkStatusController = StreamController<NetworkStatusCheck>();
+  StreamController<NetworkStatusCheck> networkStatusController =
+      StreamController<NetworkStatusCheck>();
 
-  Connectivity_Provider(){
+  Connectivity_Provider() {
     print("as");
+    // NetworkStatusCheck status =   _checkerORNot(event);
+    // networkStatusController.add(status);
+
     Connectivity().onConnectivityChanged.listen((event) async {
       print("b");
       NetworkStatusCheck status = await  _getNetworkStatus(event);
@@ -27,22 +22,23 @@ class Connectivity_Provider {
     });
   }
 
-  Future<NetworkStatusCheck> _getNetworkStatus(ConnectivityResult status) async{
+  Future<NetworkStatusCheck> _getNetworkStatus(
+      ConnectivityResult status) async {
     bool isConnected = false;
-    if(status == ConnectivityResult.mobile || status == ConnectivityResult.wifi){
-      try{
-        final result =  await InternetAddress.lookup('google.com');
+    if (status == ConnectivityResult.mobile ||
+        status == ConnectivityResult.wifi) {
+      try {
+        final result = await InternetAddress.lookup('example.com');
         if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
           isConnected = true;
         }
-      } on SocketException catch(_){
-        print("catch"+_.message.toString());
+      } on SocketException catch (_) {
+        print("catch" + _.message.toString());
         isConnected = false;
       }
-
     }
-    return isConnected ? NetworkStatusCheck.Connected : NetworkStatusCheck.NotConnected;
+    return isConnected
+        ? NetworkStatusCheck.Connected
+        : NetworkStatusCheck.NotConnected;
   }
-
 }
-

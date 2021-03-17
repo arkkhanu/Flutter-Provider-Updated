@@ -21,6 +21,7 @@ class NetworkStatusService {
 
   NetworkStatusService(){
     print("as");
+
     Connectivity().onConnectivityChanged.listen((event) {
       print("b");
       networkStatusController.add(_getNetworkStatus(event));
